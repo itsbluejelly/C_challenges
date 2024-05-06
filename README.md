@@ -23,7 +23,7 @@ To create object-like data types which contain in-house methods on how to handle
 // DEFINING THE HIDDEN BOOLEAN STRUCT WITH ALL ITS PROPERTIES
 typedef struct _Boolean{
     bool value; // THE VALUE TO MANIPULATE
-    char* (*valueOf)(void); // A FUNCTION TO TELL IF THE VALUE IS TRUE OR FALSE
+    char* (*boolValue)(void); // A FUNCTION TO TELL IF THE VALUE IS TRUE OR FALSE
 } _Boolean;
 
 _Boolean function Boolean(bool value){
@@ -34,7 +34,7 @@ _Boolean function Boolean(bool value){
 
 bool isTrue = Boolean(100);
 printf(isTrue.value) // 1
-printf(isTrue.valueOf()) // true
+printf(isTrue.boolValue()) // true
 ```
 
 ## Folder structure
@@ -51,7 +51,7 @@ The project is structured in such a way that each folder has its own data type, 
 
 | Methods                                                                     | Properties                                                                                       |
 |-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| **value**<br>  Returns the stored value in bit form, 0 for false and 1 for true | **valueOf()**<br>  Returns the stored value status as "true" if truthy and "false" if falsy |
+| **value**<br>  Returns the stored value in bit form, 0 for false and 1 for true | **boolValue()**<br>  Returns the stored value status as "true" if truthy and "false" if falsy |
 
 ### Note
 

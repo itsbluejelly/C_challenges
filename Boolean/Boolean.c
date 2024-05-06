@@ -1,3 +1,12 @@
+// THIS FILE CONTAINS:
+    // 1. _Boolean data type struct, which SHOULDNT be accessed without the constructor
+    // 2. Boolean constructor, which returns a _Boolean data type with all its properties, which are:
+        // 1. value -->   The primitive bit representation of the data type, as either 1 or 0
+        // 2. boolValue() -> The function that returns whether the value is true or false, as the string keywords
+
+// the constructor takes ONE param:
+    // 1. value --> A boolean to store in the data struct and manipulate with the accessor methods
+
 // IMPORTING NECESSARY LIBRARIES
 #include <stdio.h>
 #include <stdbool.h>
@@ -7,15 +16,14 @@
 typedef struct _Boolean
 {
     bool value;             // THE VALUE TO MANIPULATE
-    char* (*valueOf)(void); // A FUNCTION TO TELL IF THE VALUE IS TRUE OR FALSE
+    char* (*boolValue)(void); // A FUNCTION TO TELL IF THE VALUE IS TRUE OR FALSE
 } _Boolean;
 
 // A FUNCTION TO GENERATE THE BOOLEAN DATA TYPE WITH ALL THE PROPERTIES
-_Boolean *Boolean(bool value)
+_Boolean* Boolean(bool value)
 {
-    // FUNCTION FOR _BOOLEAN->VALUEOF()
-    char* _valueOf()
-    {
+    // FUNCTION FOR _BOOLEAN->BOOLVALUE()
+    char* _boolValue(){
         if (value)
         {
             return "true";
@@ -37,7 +45,7 @@ _Boolean *Boolean(bool value)
 
     // GIVING THE VALUES
     boolean->value = value;
-    boolean->valueOf = _valueOf;
+    boolean->boolValue = _boolValue;
 
     return boolean;
 }
