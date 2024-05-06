@@ -15,4 +15,17 @@ typedef struct point{
 float calc_dist(point p1, point p2);
 float findmaxdist(point *p, int N);
 
+/*monk_inversion.c struct*/
+typedef struct inverse {
+    int i;
+    struct inverse *next;
+}inverse;
+
+/*monk_inversion.c prototypes*/
+void findInverse(int **matrix, float **inverse, int size);
+int calcAdjugate(int **matrix, int **adjugate, int size);
+float calculateDeterminant(float **matrix, int size);
+void getCofactor(int **mat, int **temp, int p, int q, int n);
+
+
 #endif
