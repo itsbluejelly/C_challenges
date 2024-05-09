@@ -13,8 +13,8 @@ STANDARDS:
 
 // DEFINING A STRUCT TO HOLD THE INT_TYPE STRUCT
 typedef struct{
-    char* (*toString)(int);
+    char* (*toString)(int, int);
 }Int_type;
 
 // HELPER TOSTRING FUNCTION
-char* _toString(int);
+char* _toString(int, int);

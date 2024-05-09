@@ -19,4 +19,4 @@ typedef struct{
 }Boolean_type;
 
 // HELPER BOOLVALUE FUNCTION
-char* _boolValue(bool);
+static char* _boolValue(bool);

@@ -1,3 +1,5 @@
+#pragma once
+
 // IMPORTING NECESSARY FILES
     // IMPORTING LIBRARIES
 #include <string.h>
@@ -5,7 +7,7 @@
 #include "ModifiedString.h"
 
 // DECLARING HELPER REVERSE FUNCTION
-char* _reverse(char* value){
+static char* _reverse(char* value){
     // DECLARING VARIABLES
     int start = 0;
     int end = strlen(value) - 1;

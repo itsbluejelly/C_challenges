@@ -6,7 +6,7 @@
 
 // IMPORTING DATA TYPES
 #include "./Boolean/Boolean.c"
-#include "./Number/Number.c"
+#include "./Number/Int/Int.c"
 #include "./String/ModifiedString.c"
 
 // A FUNCTION TO TEST BOOLEANS
@@ -21,26 +21,28 @@ void testBoolean(){
     printf("%d is %s", value, isTrue);
 }
 
-// void testNumber(){
-//     // DECLARING VARIABLES
-//     int value;
+void testNumber(){
+    // DECLARING VARIABLES
+    int value, radix;
 
-//     printf("Hello world, please enter any number: ");
-//     scanf("%d", &value);
+    printf("Hello world, please enter any number: ");
+    scanf("%d", &value);
 
-//     // CREATING A NUMBER DATA TYPE
-//     _Number* numberValue = Number(INT_TYPE, &value);
-//     printf("The stored value: %d\nThe stored type: %d\n", *(int*)(numberValue->value), numberValue->number_type);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
 
-//     free(numberValue);
-// }
+    char* string_number = Int.toString(value, radix);
+    printf("The value of %d as a string is %s", value, string_number);
+}
 
 void testString(){
     // DECLARING VARIABLES
     char input_string[100];
 
+    // GETTING THE INPUT STRING
     printf("Hello there, kindly enter your input string: ");
-    scanf("%s", input_string);
+    fgets(input_string, sizeof(input_string), stdin);
+    input_string[strcspn(input_string, "\n")] = '\0';
 
     // MODIFYING THE STRING TO GET ITS EXACT VALUE
     char* actual_string = (char*)malloc(strlen(input_string));
@@ -50,7 +52,8 @@ void testString(){
         return;
     }
 
-    actual_string = strcpy(actual_string, input_string);
+    // TRANSFERRING CONTENT TO MODIFIES STRING AND CALLING ITS METHODS
+    strcpy(actual_string, input_string);
     char* reversed_string = Modified_String.reverse(actual_string);
     printf("Reversed string: %s", reversed_string);
 
@@ -60,7 +63,7 @@ void testString(){
 int main()
 {
     // testBoolean();
-    // testNumber();
-    testString();
+    testNumber();
+    // testString();
     return 0;
 }

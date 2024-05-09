@@ -1,7 +1,7 @@
 /* This file contains the struct that hold all functionality of the string type, which include:
     1. reverse(string) --> Reverses a string
 
-NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT String.c
+NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT ModifiedString.c
 
 STANDARDS:
     1. The struct defined holds all helper values
@@ -16,4 +16,4 @@ typedef struct{
 }String_type;
 
 // HELPER REVERSE METHOD
-char* _reverse(char*);
+static char* _reverse(char*);

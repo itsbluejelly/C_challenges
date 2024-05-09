@@ -2,7 +2,7 @@
 #include "Boolean.h"
 
 // DECLARING THE BOOLVALUE FUNCTION
-char* _boolValue(bool value){
+static char* _boolValue(bool value){
     if(value){
         return "true";
     }else{
