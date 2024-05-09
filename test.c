@@ -18,21 +18,28 @@ void testBoolean(){
     scanf("%d", &value);
 
     char* isTrue = Boolean.boolValue(value);
-    printf("%d is %s", value, isTrue);
+    printf("%d is %s\n", value, isTrue);
 }
 
 void testNumber(){
     // DECLARING VARIABLES
-    int value, radix;
+    int value, radix, digits, result;
 
+    // 1. TESTING INT.TOSTRING()
     printf("Hello world, please enter any number: ");
     scanf("%d", &value);
-
     printf("Now, please enter any number from 2 and 36 as the base: ");
     scanf("%d", &radix);
 
     char* string_number = Int.toString(value, radix);
-    printf("The value of %d as a string is %s", value, string_number);
+    printf("The value of %d as a string is %s\n", value, string_number);
+
+    // 2. TESTING INT.TODIGITS()
+    printf("Now, please enter any number of digits to round your number towards: ");
+    scanf("%d", &digits);
+
+    result = Int.toDigits(value, digits);
+    printf("The number %d rounded off to %d dp is: %d\n", value, digits, result);
 }
 
 void testString(){
@@ -55,7 +62,7 @@ void testString(){
     // TRANSFERRING CONTENT TO MODIFIES STRING AND CALLING ITS METHODS
     strcpy(actual_string, input_string);
     char* reversed_string = Modified_String.reverse(actual_string);
-    printf("Reversed string: %s", reversed_string);
+    printf("Reversed string: %s\n", reversed_string);
 
     free(actual_string);
 }
@@ -63,7 +70,7 @@ void testString(){
 int main()
 {
     // testBoolean();
-    testNumber();
-    // testString();
+    // testNumber();
+    testString();
     return 0;
 }

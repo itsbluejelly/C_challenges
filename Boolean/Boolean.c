@@ -1,3 +1,5 @@
+#pragma once
+
 // IMPORTING NECESSARY FILES
 #include "Boolean.h"
 

@@ -1,3 +1,5 @@
+#pragma once
+
 // IMPORTING NECESSARY FILES
     // IMPORTING LIBRARIES
 #include <math.h>
@@ -62,11 +64,28 @@ char* _toString(int value, int radix){
     number_string[index] = '\0';
 
     // REVERSE THE RESULTANT STRING
-    char* compact_string = realloc(number_string, strlen(number_string) + 1);
+    char* compact_string = realloc(number_string, strlen(number_string));
     char* string_version = Modified_String.reverse(compact_string);
 
     return string_version;
 }
 
+// DECLARING THE TODIGITS FUNCTION
+int _toDigits(int value, int digits){
+    // CHECKING IF THE RIGHT VALUES ARE GIVEN
+    if(digits <= 0){
+        fprintf(stderr, "The digits given should be at least 1");
+        exit(EXIT_FAILURE);
+    }
+
+    int precision = pow(10, digits);
+    int result = round(value * precision) / precision;
+
+    return result;
+}
+
 // THE INT STRUCT
-Int_type Int = {.toString = _toString};
+Int_type Int = {
+    .toString = _toString,
+    .toDigits = _toDigits
+};

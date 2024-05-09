@@ -15,8 +15,8 @@ STANDARDS:
 
 // THE STRUCT CONTAINING ALL HELPER FUNCTIONS
 typedef struct{
-    char* (*boolValue)(bool);
+    char* (*boolValue)(bool value);
 }Boolean_type;
 
 // HELPER BOOLVALUE FUNCTION
-static char* _boolValue(bool);
+static char* _boolValue(bool value);
