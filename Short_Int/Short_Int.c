@@ -6,34 +6,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-    // IMPORTING INT TYPE
-#include "Int.h"
+// IMPORTING SHORT_INT TYPE
+#include "Short_Int.h"
 #include "../String/ModifiedString.c"
 
 // DECLARING THE TOSTRING FUNCTION
-char* _toString(int value, int radix){
+char *_toString_Short(short int value, int radix)
+{
     // CHECKING IF THE VALUES ARE ADDED APPROPRIATELY
-    if(!radix){
+    if (!radix)
+    {
         radix = 10;
-    }else if(!value){
+    }
+    else if (!value)
+    {
         fprintf(stderr, "Invalid params, no value is added");
         exit(EXIT_FAILURE);
-    }else if((radix < 2) || (radix > 36)){
+    }
+    else if ((radix < 2) || (radix > 36))
+    {
         fprintf(stderr, "The base must be between 2 and 36");
         exit(EXIT_FAILURE);
     }
 
     // DECLARING VARIABLES
-    int index = 0; 
+    int index = 0;
     bool is_negative = false;
-    char* number_string = (char*)malloc(100 * sizeof(char));
-    char* valid_characters = "0123456789abcdefghijklmnopqrstuvwxyz";
+    char *number_string = (char *)malloc(100 * sizeof(char));
+    char *valid_characters = "0123456789abcdefghijklmnopqrstuvwxyz";
 
     // IF NO IS O, RETURN 0
-    if(value == 0){
-        char* compact_string = (char*)malloc(2 * sizeof(char));
+    if (value == 0)
+    {
+        char *compact_string = (char *)malloc(2 * sizeof(char));
 
-        if(compact_string == NULL){
+        if (compact_string == NULL)
+        {
             fprintf(stderr, "Error allocating memory");
             exit(EXIT_FAILURE);
         }
@@ -43,20 +51,23 @@ char* _toString(int value, int radix){
     }
 
     // IF NO IS -VE, CONVERT TO POSITIVE
-    if((value < 0) && (radix == 10)){
+    if ((value < 0) && (radix == 10))
+    {
         is_negative = true;
         value = -value;
     }
 
     // OTHERWISE, CONVERT NO TO RIGHT BASE
-    while(value){
+    while (value)
+    {
         int bit = value % radix;
         number_string[index] = valid_characters[bit];
         value /= radix;
         index += 1;
     }
 
-    if(is_negative){
+    if (is_negative)
+    {
         number_string[index] = '-';
         index += 1;
     }
@@ -64,37 +75,40 @@ char* _toString(int value, int radix){
     number_string[index] = '\0';
 
     // REVERSE THE RESULTANT STRING
-    char* compact_string = realloc(number_string, strlen(number_string));
+    char *compact_string = realloc(number_string, strlen(number_string));
 
-    if(compact_string == NULL){
+    if (compact_string == NULL)
+    {
         fprintf(stderr, "Error allocating memory");
         exit(EXIT_FAILURE);
     }
 
-    char* string_version = Modified_String.reverse(compact_string);
+    char *string_version = Modified_String.reverse(compact_string);
 
     return string_version;
 }
 
 // DECLARING THE TODIGITS FUNCTION
-int _toDigits(int value, int digits){
+short int _toDigits_Short(short int value, int digits)
+{
     // CHECKING IF RIGHT PARAMS WERE GIVEN
-    if(digits <= 0){
+    if (digits <= 0)
+    {
         fprintf(stderr, "The no of significant digits should be at least one");
         exit(EXIT_FAILURE);
     }
 
     // DECLARING VARIABLES
-    char* string_number = _toString(value, 10);
+    char *string_number = _toString_Short(value, 10);
     int power = pow(10, strlen(string_number) - digits);
     // ROUNDING OFF THE NUMBER AS EXPECTED
-    int rounded_number = round((double)value / power) * power;
+    short int rounded_number = round((double)value / power) * power;
 
     return rounded_number;
 }
 
-// THE INT STRUCT
-Int_type Int = {
-    .toString = _toString,
-    .toDigits = _toDigits
+// THE SHORT_INT STRUCT
+Short_Int_type Short_Int = {
+    .toString = _toString_Short,
+    .toDigits = _toDigits_Short
 };

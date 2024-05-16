@@ -1,9 +1,9 @@
 /*
-    This file contains the struct responsible for the int type methods, which include:
-        -toString() --> Converts a number to a string
-        -toDigits() --> rounds off a number to a string of specified digits
+    This file contains the struct responsible for the float type methods, which include:
+        -toString() --> Converts a decimal to a string
+        -toDecimals() --> rounds off a decimal to a string of specified decimal places
 
-NB: THIS STRUCT IS APPLIED TO Int.c
+NB: THIS STRUCT IS APPLIED TO Float.c
 
 STANDARDS:
     1. The struct defined holds all helper values
@@ -23,11 +23,11 @@ STANDARDS:
 
 # pragma once
 
-// DEFINING A STRUCT TO HOLD THE INT_TYPE STRUCT
+// DEFINING A STRUCT TO HOLD THE FLOAT_TYPE STRUCT
 typedef struct{
-    char* (*toString)(int value, int radix);
-    int (*toDigits)(int value, int digits);
-}Int_type;
+    char* (*toString)(float value, int radix);
+    float (*toDecimals)(float value, int digits);
+}Float_type;
 
-char* _toString(int value, int radix); // HELPER TOSTRING FUNCTION
-int _toDigits(int value, int digits); // HELPER TODIGITS FUNCTION
+char* _toString_Float(float value, int radix); // HELPER TOSTRING FUNCTION
+float _toDecimals(float value, int digits); // HELPER TODECIMALS FUNCTION
