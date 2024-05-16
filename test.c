@@ -12,6 +12,7 @@
 #include "./Unsigned_Int/Unsigned_Int.c"
 #include "./Long_Long_Int/Long_Long_Int.c"
 #include "./Unsigned_Long_Int/Unsigned_Long_Int.c"
+#include "./Float/Float.c"
 #include "./String/ModifiedString.c"
 
 // A FUNCTION TO TEST BOOLEANS
@@ -182,6 +183,28 @@ void testUnsignedLongInt(){
     printf("The number %ld rounded off to %d significant figures is: %ld\n", value, digits, result);
 }
 
+void testFloat(){
+    // DECLARING VARIABLES
+    float value, result;
+    int radix, digits;
+
+    // 1. TESTING FLOAT.TOSTRING()
+    printf("Hello world, please enter any number: ");
+    scanf("%f", &value);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
+
+    char *string_number = Float.toString(value, radix);
+    printf("The value of %.4f as a string is %s\n", value, string_number);
+
+    // 2. TESTING FLOAT.TODECIMALS()
+    printf("Now, please enter any number of decimals to round your number towards: ");
+    scanf("%d", &digits);
+
+    result = Float.toDecimals(value, digits);
+    printf("The number %f rounded off to %d decimal places is: %.*f\n", value, digits, digits, result);
+}
+
 int main()
 {
     // testBoolean();
@@ -191,6 +214,7 @@ int main()
     // testLongInt();
     // testUnsignedInt();
     // testLongLongInt();
-    testUnsignedLongInt();
+    // testUnsignedLongInt();
+    testFloat();
     return 0;
 }
