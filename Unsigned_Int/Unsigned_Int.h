@@ -1,9 +1,9 @@
 /*
-    This file contains the struct responsible for the int type methods, which include:
+    This file contains the struct responsible for the unsigned int type methods, which include:
         -toString() --> Converts a number to a string
         -toDigits() --> rounds off a number to a string of specified digits
 
-NB: THIS STRUCT IS APPLIED TO Int.c
+NB: THIS STRUCT IS APPLIED TO Unsigned_Int.c
 
 STANDARDS:
     1. The struct defined holds all helper values
@@ -21,13 +21,14 @@ STANDARDS:
         - long double -> 16 bytes for 64-bit, 12 bytes for 32-bit
 */
 
-# pragma once
+#pragma once
 
-// DEFINING A STRUCT TO HOLD THE INT_TYPE STRUCT
-typedef struct{
-    char* (*toString)(int value, int radix);
-    int (*toDigits)(int value, int digits);
-}Int_type;
+// DEFINING A STRUCT TO HOLD THE UNSIGNED_INT_TYPE STRUCT
+typedef struct
+{
+    char* (*toString)(unsigned int value, int radix);
+    unsigned int (*toDigits)(unsigned int value, int digits);
+} Unsigned_Int_type;
 
-char* _toString(int value, int radix); // HELPER TOSTRING FUNCTION
-int _toDigits(int value, int digits); // HELPER TODIGITS FUNCTION
+char *_toString_Unsigned(unsigned int value, int radix); // HELPER TOSTRING FUNCTION
+unsigned int _toDigits_Unsigned(unsigned int value, int digits);  // HELPER TODIGITS FUNCTION
