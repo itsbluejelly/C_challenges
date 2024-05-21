@@ -13,6 +13,8 @@
 #include "./Long_Long_Int/Long_Long_Int.c"
 #include "./Unsigned_Long_Int/Unsigned_Long_Int.c"
 #include "./Float/Float.c"
+#include "./Double/Double.c"
+#include "./Long_Double/Long_Double.c"
 #include "./String/ModifiedString.c"
 
 // A FUNCTION TO TEST BOOLEANS
@@ -205,6 +207,43 @@ void testFloat(){
     printf("The number %f rounded off to %d decimal places is: %.*f\n", value, digits, digits, result);
 }
 
+void testDouble(){
+    // DECLARING VARIABLES
+    double value, result;
+    int radix, digits;
+
+    // 1. TESTING DOUBLE.TOSTRING()
+    printf("Hello world, please enter any number: ");
+    scanf("%lf", &value);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
+
+    char *string_number = Double.toString(value, radix);
+    printf("The value of %.4lf as a string is %s\n", value, string_number);
+
+    // 2. TESTING DOUBLE.TODECIMALS()
+    printf("Now, please enter any number of decimals to round your number towards: ");
+    scanf("%d", &digits);
+
+    result = Double.toDecimals(value, digits);
+    printf("The number %lf rounded off to %d decimal places is: %.*lf\n", value, digits, digits, result);
+}
+
+void testLongDouble(){
+    // DECLARING VARIABLES
+    long double value;
+    int radix;
+
+    // TESTING LONG_DOUBLE.TOSTRING()
+    printf("Hello world, please enter any number: ");
+    scanf("%Lf", &value);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
+
+    char *string_number = Double.toString(value, radix);
+    printf("The value of %.4Lf as a string is %s\n", value, string_number);
+}
+
 int main()
 {
     // testBoolean();
@@ -215,6 +254,8 @@ int main()
     // testUnsignedInt();
     // testLongLongInt();
     // testUnsignedLongInt();
-    testFloat();
+    // testFloat();
+    // testDouble();
+    testLongDouble();
     return 0;
 }
