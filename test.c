@@ -51,26 +51,33 @@ void testInt(){
 }
 
 void testString(){
-    // DECLARING VARIABLES
-    char input_string[100];
+    char test_string[100];
+    size_t string_size;
 
-    // GETTING THE INPUT STRING
-    printf("Hello there, kindly enter your input string: ");
-    fgets(input_string, sizeof(input_string), stdin);
-    input_string[strcspn(input_string, "\n")] = '\0';
+    // GETTING THE STRING VALUE
+    printf("Please enter a sentence here: ");
+    fgets(test_string, sizeof(test_string), stdin);
+    test_string[strcspn(test_string, "\n")] = '\0';
 
-    // MODIFYING THE STRING TO GET ITS EXACT VALUE
-    char* actual_string = (char*)malloc(strlen(input_string));
+    char *actual_string = (char *)malloc(strlen(test_string) + 1);
 
     if(actual_string == NULL){
-        printf("Error accessing memory");
-        return;
+        fprintf(stderr, "Error allocating memory for actual compact string\n");
+        exit(EXIT_FAILURE);
     }
 
-    // TRANSFERRING CONTENT TO MODIFIES STRING AND CALLING ITS METHODS
-    strcpy(actual_string, input_string);
-    char* reversed_string = Modified_String.reverse(actual_string);
-    printf("Reversed string: %s\n", reversed_string);
+    strcpy(actual_string, test_string);
+    printf("\n-> Recorded string is: %s\n", actual_string);
+
+    // 1. CALCULATING THE LENGTH OF THE STRING
+    string_size = Modified_String.length(actual_string);
+    printf("-> The string has a length of: %lld characters\n", string_size);
+
+    // 2. GETTING THE STRING IN LOWERCASE
+    printf("-> The string in all lowcase is: %s\n", Modified_String.toLower(actual_string));
+    // 3. CONVERTING THE STRING TO UPPERCASE
+    printf("-> The string in all uppercase is: %s", Modified_String.toUpper(actual_string));
+    // 4. REVERSING THE STRING
 
     free(actual_string);
 }
@@ -248,7 +255,7 @@ int main()
 {
     // testBoolean();
     // testInt();
-    // testString();
+    testString();
     // testShortInt();
     // testLongInt();
     // testUnsignedInt();
@@ -256,6 +263,6 @@ int main()
     // testUnsignedLongInt();
     // testFloat();
     // testDouble();
-    testLongDouble();
+    // testLongDouble();
     return 0;
 }

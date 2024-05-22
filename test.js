@@ -1,1 +1,0 @@
-const man = BigInt(5)
