@@ -13,6 +13,8 @@
 #include "./Long_Long_Int/Long_Long_Int.c"
 #include "./Unsigned_Long_Int/Unsigned_Long_Int.c"
 #include "./Float/Float.c"
+#include "./Double/Double.c"
+#include "./Long_Double/Long_Double.c"
 #include "./String/ModifiedString.c"
 
 // A FUNCTION TO TEST BOOLEANS
@@ -49,26 +51,33 @@ void testInt(){
 }
 
 void testString(){
-    // DECLARING VARIABLES
-    char input_string[100];
+    char test_string[100];
+    size_t string_size;
 
-    // GETTING THE INPUT STRING
-    printf("Hello there, kindly enter your input string: ");
-    fgets(input_string, sizeof(input_string), stdin);
-    input_string[strcspn(input_string, "\n")] = '\0';
+    // GETTING THE STRING VALUE
+    printf("Please enter a sentence here: ");
+    fgets(test_string, sizeof(test_string), stdin);
+    test_string[strcspn(test_string, "\n")] = '\0';
 
-    // MODIFYING THE STRING TO GET ITS EXACT VALUE
-    char* actual_string = (char*)malloc(strlen(input_string));
+    char *actual_string = (char *)malloc(strlen(test_string) + 1);
 
     if(actual_string == NULL){
-        printf("Error accessing memory");
-        return;
+        fprintf(stderr, "Error allocating memory for actual compact string\n");
+        exit(EXIT_FAILURE);
     }
 
-    // TRANSFERRING CONTENT TO MODIFIES STRING AND CALLING ITS METHODS
-    strcpy(actual_string, input_string);
-    char* reversed_string = Modified_String.reverse(actual_string);
-    printf("Reversed string: %s\n", reversed_string);
+    strcpy(actual_string, test_string);
+    printf("\n-> Recorded string is: %s\n", actual_string);
+
+    // 1. CALCULATING THE LENGTH OF THE STRING
+    string_size = Modified_String.length(actual_string);
+    printf("-> The string has a length of: %lld characters\n", string_size);
+
+    // 2. GETTING THE STRING IN LOWERCASE
+    printf("-> The string in all lowcase is: %s\n", Modified_String.toLower(actual_string));
+    // 3. CONVERTING THE STRING TO UPPERCASE
+    printf("-> The string in all uppercase is: %s", Modified_String.toUpper(actual_string));
+    // 4. REVERSING THE STRING
 
     free(actual_string);
 }
@@ -205,16 +214,55 @@ void testFloat(){
     printf("The number %f rounded off to %d decimal places is: %.*f\n", value, digits, digits, result);
 }
 
+void testDouble(){
+    // DECLARING VARIABLES
+    double value, result;
+    int radix, digits;
+
+    // 1. TESTING DOUBLE.TOSTRING()
+    printf("Hello world, please enter any number: ");
+    scanf("%lf", &value);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
+
+    char *string_number = Double.toString(value, radix);
+    printf("The value of %.4lf as a string is %s\n", value, string_number);
+
+    // 2. TESTING DOUBLE.TODECIMALS()
+    printf("Now, please enter any number of decimals to round your number towards: ");
+    scanf("%d", &digits);
+
+    result = Double.toDecimals(value, digits);
+    printf("The number %lf rounded off to %d decimal places is: %.*lf\n", value, digits, digits, result);
+}
+
+void testLongDouble(){
+    // DECLARING VARIABLES
+    long double value;
+    int radix;
+
+    // TESTING LONG_DOUBLE.TOSTRING()
+    printf("Hello world, please enter any number: ");
+    scanf("%Lf", &value);
+    printf("Now, please enter any number from 2 and 36 as the base: ");
+    scanf("%d", &radix);
+
+    char *string_number = Double.toString(value, radix);
+    printf("The value of %.4Lf as a string is %s\n", value, string_number);
+}
+
 int main()
 {
     // testBoolean();
     // testInt();
-    // testString();
+    testString();
     // testShortInt();
     // testLongInt();
     // testUnsignedInt();
     // testLongLongInt();
     // testUnsignedLongInt();
-    testFloat();
+    // testFloat();
+    // testDouble();
+    // testLongDouble();
     return 0;
 }
