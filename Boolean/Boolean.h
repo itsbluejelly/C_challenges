@@ -15,8 +15,16 @@ STANDARDS:
 
 // THE STRUCT CONTAINING ALL HELPER FUNCTIONS
 typedef struct{
+    /**
+     * A function that checks if a boolean value is true or false
+     * @param value The boolean to check -> Type bool
+     * @return The string "true" if true and "false" if false
+    */
     char* (*boolValue)(bool value);
 }Boolean_type;
 
-// HELPER BOOLVALUE FUNCTION
+/**
+ * A function that checks if a boolean value is true or false
+ * @attention Please use this eithin the Boolean struct, as it is internal
+ */
 static char* _boolValue(bool value);

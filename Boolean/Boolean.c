@@ -3,7 +3,6 @@
 // IMPORTING NECESSARY FILES
 #include "Boolean.h"
 
-// DECLARING THE BOOLVALUE FUNCTION
 static char* _boolValue(bool value){
     if(value){
         return "true";
@@ -12,5 +11,7 @@ static char* _boolValue(bool value){
     }
 }
 
-// DECLARING THE BOOLEAN TYPE, WHICH IS EXPORTED
+/**
+ * The struct that contains all helper functions for boolean types
+*/
 Boolean_type Boolean = { .boolValue = _boolValue };
