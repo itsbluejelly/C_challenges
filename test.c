@@ -1,9 +1,5 @@
 // A FILE TO TEST OUT THE DATA HELPER TYPES😀
 
-// IMPORTING NECESSARY FILES
-#include <stdio.h>
-#include <stdlib.h>
-
 // IMPORTING DATA TYPES
 #include "./Boolean/Boolean.c"
 #include "./Int/Int.c"
@@ -52,14 +48,41 @@ void testInt(){
 
 void testString(){
     char test_string[100];
-    size_t string_size;
+    char old_substring[100];
+    char new_substring[100];
+    char delimiter;
+    int split_limit;
 
-    // GETTING THE STRING VALUE
-    printf("Please enter a sentence here: ");
+    size_t string_size;
+    char *actual_string, *delimiter_exists;
+    char** split_strings;
+
+    // GETTING THE STRING VALUES
+    printf("1. Please enter a sentence here: ");
     fgets(test_string, sizeof(test_string), stdin);
     test_string[strcspn(test_string, "\n")] = '\0';
 
-    char *actual_string = (char *)malloc(strlen(test_string) + 1);
+    printf("2. Please enter the part of the string you would want to replace: ");
+    fgets(old_substring, sizeof(old_substring), stdin);
+    old_substring[strcspn(old_substring, "\n")] = '\0';
+
+    printf("3. Please enter the new string to replace said characters above: ");
+    fgets(new_substring, sizeof(new_substring), stdin);
+    new_substring[strcspn(new_substring, "\n")] = '\0';
+
+    printf("4. What character would you like to help separate your string with: ");
+    scanf("%c", &delimiter);
+
+    printf("5. How many substrings would you like to produce: ");
+    scanf("%d", &split_limit);
+
+    if(split_limit <= 0){
+        fprintf(stderr, "No split strings found, please put a limit greater than or equal to 0");
+        exit(EXIT_FAILURE);
+    }
+
+
+    actual_string = malloc(strlen(test_string) + 1);
 
     if(actual_string == NULL){
         fprintf(stderr, "Error allocating memory for actual compact string\n");
@@ -76,9 +99,45 @@ void testString(){
     // 2. GETTING THE STRING IN LOWERCASE
     printf("-> The string in all lowcase is: %s\n", Modified_String.toLower(actual_string));
     // 3. CONVERTING THE STRING TO UPPERCASE
-    printf("-> The string in all uppercase is: %s", Modified_String.toUpper(actual_string));
+    printf("-> The string in all uppercase is: %s\n", Modified_String.toUpper(actual_string));
     // 4. REVERSING THE STRING
+    printf("-> The string reversed is: %s\n", Modified_String.reverse(actual_string));
 
+    // 5. REPLACING THE STRING
+    Modified_String.reverse(actual_string);
+        
+    printf(
+        "-> The new string after replacing said characters is: %s\n",
+        Modified_String.replace(actual_string, Modified_String.toLower(old_substring), new_substring)
+    );
+
+    // 7. FINDING THE POSITION OF THE DELIMETER
+    printf(
+        "-> The delimeter '%c' is at position: %d\n",
+        delimiter,
+        Modified_String.inPosition(actual_string, delimiter)
+    );
+
+    // 8. DETERMINING IF THE DELIMITER EXISTS
+    delimiter_exists = Modified_String.includes(actual_string, delimiter);
+
+    if(strcmp(delimiter_exists, "true") != 0){
+        printf("\t-> The delimiter '%c' does not exist", delimiter);
+    }else{
+        printf("\t-> The delimiter '%c' exists", delimiter);
+    }
+
+    // 6. SPLITTING THE STRING
+    split_strings = Modified_String.split(actual_string, delimiter, split_limit);
+
+    printf("\nThe split strings are as follows:\n");
+
+    for(int i = 0; split_strings[i] != NULL; i++){
+        printf("\t%d: %s\n", i + 1, split_strings[i]);
+        free(split_strings[i]);
+    }
+
+    free(split_strings);
     free(actual_string);
 }
 
