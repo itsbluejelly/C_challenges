@@ -130,7 +130,7 @@ char** _split(char* value, char delimiter, int limit){
 
     while(value[index] != '\0'){
         if(value[index] == delimiter){
-            // REALLOCATE MEMORY AND DEAL WITH THE JUST FINISHED SUBSTRING
+            // DEAL WITH THE JUST FINISHED SUBSTRING
             result[outer_index][inner_index] = '\0';
 
             // RECALCULATE THE INDEXES
@@ -164,22 +164,93 @@ char** _split(char* value, char delimiter, int limit){
 
 int _inPosition(char* value, char character){
     int position = strcspn(value, &character);
-    
-    if(value[position] == '\0'){
-        return -1;
-    }else{
-        return position;
-    }
+    return value[position] == '\0' ? -1 : position;
 }
 
 char* _includes(char* value, char character){
     int position = _inPosition(value, character);
-    
-    if(position == -1){
-        return "false";
-    }else{
-        return "true";
+    return position == -1 ? "false" : "true";
+}
+
+int _convertToWhole(char* value, int radix){
+    // CHECKING IF THE VALUES ARE OKAY
+    if(!radix){
+        radix = 10;
+    }else if((radix < 2) || (radix > 36)){
+        fprintf(stderr, "The base must be between 2 and 36");
+        exit(EXIT_FAILURE);
     }
+
+    // CONVERT TO DECIMAL AND ROUND OFF TO GET RESULT
+    int result = round(_convertToDecimal(value, radix));
+    return result;
+}
+
+float _convertToDecimal(char *value, int radix){
+    // CHECKING IF THE VALUES ARE OKAY
+    if (!radix){
+        radix = 10;
+    }else if ((radix < 2) || (radix > 36)){
+        fprintf(stderr, "The base must be between 2 and 36");
+        exit(EXIT_FAILURE);
+    }
+
+    // DECLARING VARIABLES
+    bool isNegative = false;
+    bool isDecimal = false;
+    char *decimal_part, *integer_part;
+    char *validCharacters = "0123456789abcdefghijklmnopqrstuvwxyz";
+    float result;
+
+    // CHECK IF THE STRING IS A DECIMAL OR A NEGATIVE NUMBER OR IS A VALID DIGIT
+    for (long long unsigned i = 0; i < strlen(value); i++){
+        // CHECK IF VALID
+        char *value_exists = _includes(&validCharacters[radix], value[i]);
+        if (strcmp(value_exists, "true") == 0){
+            fprintf(stderr, "The digit '%c' in '%s' is invalid for base %d", value[i], value, radix);
+            exit(EXIT_FAILURE);
+        }
+
+        // CHECK IF DECIMAL
+        if (value[i] == '.') isDecimal = true;
+
+        // CHECK IF NEGATIVE
+        if ((value[i] == '-') && (radix == 10)){
+            isNegative = true;
+            value = &value[i + 1];
+        }
+    }
+
+    // DEAL WITH THE DECIMAL PRESCENCE
+    if (isDecimal){
+        char **split_strings = _split(value, '.', 2);
+        integer_part = split_strings[0];
+        decimal_part = split_strings[1];
+    }else{
+        integer_part = value;
+    }
+
+    // CONVERT THE WHOLE PART TO AN INTEGER
+    for (int i = 0; i < (int)strlen(integer_part); i++){
+        double power = pow((double)radix, (double)(strlen(integer_part) - (i + 1)));
+        int digit = _inPosition(validCharacters, integer_part[i]) * power;
+        result += digit;
+    }
+
+    // CONVERT THE DECIMAL PART AND ADD IT TO THE RESULT
+    if (decimal_part != NULL){
+        for (int i = 1; i <= (int)strlen(decimal_part); i++){
+            double power = 1 / (pow((double)radix, (double)i));
+            float digit = _inPosition(validCharacters, decimal_part[i]) * power;
+            result += digit;
+        }
+    }else{
+        result += 0.0;
+    }
+
+    // RETURN THE DECIMAL
+    if (isNegative) result = -(result);
+    return (result);
 }
 
 /**
@@ -193,5 +264,7 @@ String_type Modified_String = {
     .replace = _replace,
     .split = _split,
     .inPosition = _inPosition,
-    .includes = _includes
+    .includes = _includes,
+    .convertToWhole = _convertToWhole,
+    .convertToDecimal = _convertToDecimal
 };

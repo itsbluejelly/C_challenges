@@ -50,37 +50,47 @@ void testString(){
     char test_string[100];
     char old_substring[100];
     char new_substring[100];
+    char input[10];
+
     char delimiter;
-    int split_limit;
+    int split_limit, radix;
 
     size_t string_size;
     char *actual_string, *delimiter_exists;
     char** split_strings;
 
     // GETTING THE STRING VALUES
-    printf("1. Please enter a sentence here: ");
+    printf("1. Please enter a number here: ");
     fgets(test_string, sizeof(test_string), stdin);
     test_string[strcspn(test_string, "\n")] = '\0';
 
-    printf("2. Please enter the part of the string you would want to replace: ");
+    printf("2. Please enter the digit(s) you would want to replace: ");
     fgets(old_substring, sizeof(old_substring), stdin);
     old_substring[strcspn(old_substring, "\n")] = '\0';
 
-    printf("3. Please enter the new string to replace said characters above: ");
+    printf("3. Please enter the digit(s): ");
     fgets(new_substring, sizeof(new_substring), stdin);
     new_substring[strcspn(new_substring, "\n")] = '\0';
 
-    printf("4. What character would you like to help separate your string with: ");
-    scanf("%c", &delimiter);
+    printf("4. What radix is your number in: ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    radix = atoi(input);
 
-    printf("5. How many substrings would you like to produce: ");
-    scanf("%d", &split_limit);
+    printf("5. What character would you like to help separate your number with: ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    delimiter = *input;
+
+    printf("6. How many substrings would you like to produce: ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    split_limit = atoi(input);
 
     if(split_limit <= 0){
         fprintf(stderr, "No split strings found, please put a limit greater than or equal to 0");
         exit(EXIT_FAILURE);
     }
-
 
     actual_string = malloc(strlen(test_string) + 1);
 
@@ -136,6 +146,13 @@ void testString(){
         printf("\t%d: %s\n", i + 1, split_strings[i]);
         free(split_strings[i]);
     }
+
+    // 7. CONVERING THE STRING TO A WHOLE NUMBER
+    printf(
+        "-> The string '%s' of radix %d as a whole number is: %.4f\n", 
+        actual_string, radix, 
+        Modified_String.convertToDecimal(actual_string, radix)
+    );
 
     free(split_strings);
     free(actual_string);

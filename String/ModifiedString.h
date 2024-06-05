@@ -7,8 +7,8 @@
     5. split(string original, string delimiter) --> split a string using a delimeter
     6. includes(string original, string included) --> checks if a string has a value included
     7. inPosition(string original, string included) --> returns the index to which a string searched 1st appears
-    8. convertToWhole(string) --> Converts a string to a whole number base 10
-    9. convertToDecimal(string) --> Converts a string to a decimal number base 10
+    8. convertToWhole(string value, int radix) --> Converts a string representing a number of a specified base to a whole number base 10
+    9. convertToDecimal(string value, int radix) --> Converts a string representing a number of a specified base to a decimal number base 10
 
 NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT ModifiedString.c
 
@@ -82,6 +82,22 @@ typedef struct{
      * @return The string "true" if true and "false" if false
      */
     char* (*includes)(char*, char);
+
+    /**
+     * A function to convert a string, whether a float or int, to a whole number base 10
+     * @param value The string to convert -> Type char*
+     * @param radix The base the strings digits are in, should be between 2 and 16 -> Type int
+     * @return A whole number in base 10 -> Type int
+    */
+    int (*convertToWhole)(char*, int);
+
+    /**
+     * A function to convert a string, whether a float or int, to a decimal number base 10
+     * @param value The string to convert -> Type char*
+     * @param radix The base the strings digits are in, should be between 2 and 16 -> Type int
+     * @return A decimal number in base 10 -> Type double
+    */
+    float (*convertToDecimal)(char*, int);
 }String_type;
 
 /**
@@ -131,3 +147,15 @@ int _inPosition(char* value, char character);
  * @attention Please use this within the Modified String struct, as it is internal
  */
 char* _includes(char* value, char character);
+
+/**
+ * A function to convert a string, whether a float or int, to a whole number base 10
+ * @attention Please use this within the Modified String struct, as it is internal 
+ */
+int _convertToWhole(char* value, int radix);
+
+/**
+ * A function to convert a string, whether a float or int, to a decimal number base 10
+ * @attention Please use this within the Modified String struct, as it is internal
+ */
+float _convertToDecimal(char* value, int radix);
