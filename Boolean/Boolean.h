@@ -31,7 +31,7 @@ typedef struct{
 
 /**
  * A function that constructs the Boolean struct
- * @param value The pointer of a value of any type to modify and return with the added functions -> Type void*
+ * @param value The address of a value of any type to modify and return with the added functions -> Type void*
  * @return A struct that contains the value and the added functions -> Type Boolane_type*
  */
 Boolean_type Boolean_maker(void* value);

@@ -3,6 +3,7 @@
 // IMPORTING NECESSARY FILES
 #include "Boolean.h"
 #include <stddef.h>
+#include <string.h>
 
 /**
  * The current boolean created globally
@@ -13,12 +14,11 @@ Boolean_type Boolean_current;
 char* Boolean_maker_boolValue(){
     if (
         Boolean_current.value == NULL || 
-        *(int *)Boolean_current.value == 0
+        *(int *)Boolean_current.value == 0 ||
+       strcmp(*(char**)Boolean_current.value, "\0") == 0
     ){
         return "false";
-    }
-    else
-    {
+    }else{
         return "true";
     }
 }
