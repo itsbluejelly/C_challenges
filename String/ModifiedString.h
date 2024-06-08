@@ -1,161 +1,155 @@
-/* This file contains the struct that hold all functionality of the string type, which include:
-    1. length(string) --> The length of the string
-    1. reverse(string) --> Reverses a string
-    2. toLower(string) --> Converts to lowercase
-    3. toUpper(string) --> Converts to uppercase
-    4. replace(string original, string replacer) --> Replace a string within a string
-    5. split(string original, string delimiter) --> split a string using a delimeter
-    6. includes(string original, string included) --> checks if a string has a value included
-    7. inPosition(string original, string included) --> returns the index to which a string searched 1st appears
-    8. convertToWhole(string value, int radix) --> Converts a string representing a number of a specified base to a whole number base 10
-    9. convertToDecimal(string value, int radix) --> Converts a string representing a number of a specified base to a decimal number base 10
+/*
+    This file contains the
+        1. Struct declaration that holds the struct type enclosing the string
+        2. A constructor for the modified string
+        3. Helper function declarations for the String_type struct
 
-NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT ModifiedString.c
+    NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT ModifiedString.c
 
-STANDARDS:
-    1. The struct defined holds all helper values
-    2. The helper functions are defined with an underscore + name, to prevent naming issues
+    STANDARDS:
+        1. The struct defined holds the value and helper functions
+        2. The helper functions are defined in the format "String_maker_(helper fn)", to prevent naming issues
+        3. Anything to do with the custom type should be prefixed with "String_"
 */
 
 # pragma once
 
-// A STRUCT TO CONTAIN THE STRING METHODS
-typedef struct{
-    /*
-     * A helper function that returns the length of a string
-     * @param value A string to calculate the length -> type char*
-     * @return the size of the string -> type size_t
-     */
-    size_t (*length)(char*);
+// IMPORTING NECESSARY LIBRARIES
+#include <stdbool.h>
 
-    /*
-     * A function that returns a reversed form of the string
-     * @param value A string to reverse -> type char*
+/**
+ * The struct definition for the string type that contains these properties
+ *  1. value --> A pointer to the string value held within the struct
+ *  2. length --> The length of the string
+ *  3. lowercase --> The string in lowercase
+ *  4. uppercase --> The string in uppercase
+ *  5. reverse() --> Reverses a string
+    6. replace() --> Replace a string within a string
+    7. split() --> split a string using a delimeter
+    8. includes() --> checks if a string has a value included
+    9. inPosition() --> returns the index to which a string searched 1st appears
+    10. convertToWhole() --> Converts a string representing a number of a specified base to a whole number base 10
+    11. convertToDecimal() --> Converts a string representing a number of a specified base to a decimal number base 10
+ */
+typedef struct{
+    // A pointer to the value held within the struct --> Type char**
+    char** value;
+    // The length of the stored string --> Type size_t
+    size_t length;
+    // The stored string all in lowercase
+    char *lowercase;
+    // The stored string all in uppercase
+    char *uppercase;
+
+    /**
+     * A function that returns a reversed form of the stored string
      * @return the string reversed -> type char*
      */
-    char* (*reverse)(char*);
+    char* (*reverse)();
 
-    /*
-     * A function that returns a string all in lowercase
-     * @param value A string to convert -> type char*
-     * @return the string in lowercase -> type char*
-     */
-    char* (*toLower)(char*);
-
-    /*
-     * A function that returns a string all in uppercase
-     * @param value A string to convert -> type char*
-     * @return the string in uppercase -> type char*
-     */
-    char* (*toUpper)(char*);
-
-    /*
-     * A function that replaces a subset of a string within the original string with a new one
-     * @param original_string The original string to work on -> type char*
+    /**
+     * A function that replaces a subset of the original string with a new one
      * @param replaced_string The substring to replace -> type char*
      * @param new_string The new substring to replace the old substing -> type char*
      * @return the new string with the new substring -> type char*
      */
-    char* (*replace)(char*, char*, char*);
+    char* (*replace)(char*, char*);
     
-    /*
-     * A function that splits a string into a subset of strings
-     * @param value The string to split -> type char*
+    /**
+     * A function that splits the stored string into a subset of strings
      * @param delimeter The character to separate the string on -> type char
      * @param limit The maximum number of substrings to produce -> type int
      * @return An array of substrings -> type char**
      */
-    char** (*split)(char*, char, int);
+    char** (*split)(char, int);
 
     /**
      * A function that returns the index of where a character is placed, -1 if it isnt in the string
-     * @param value The string which has the character -> Type char*
-     * @param character The character to search fo -> Type char
-     * @return The position of the character in the string
+     * @param character The character to search for -> Type char
+     * @return The position of the character in the string -> Type int
     */
-    int (*inPosition)(char*, char);
+    int (*inPosition)(char);
 
     /**
-     * A function that checks if a string contains a certain character
-     * @param value The string which has the character -> Type char*
-     * @param character The character to search fo -> Type char
-     * @return The string "true" if true and "false" if false
+     * A function that checks if the stored string contains a certain character
+     * @param character The character to search for -> Type char
+     * @return The boolean true or false depending on the prescence of the character -> Type bool
      */
-    char* (*includes)(char*, char);
+    bool (*includes)(char);
 
     /**
-     * A function to convert a string, whether a float or int, to a whole number base 10
-     * @param value The string to convert -> Type char*
-     * @param radix The base the strings digits are in, should be between 2 and 16 -> Type int
+     * A function to convert the stored string, whether a float or int, to a whole number base 10
+     * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
      * @return A whole number in base 10 -> Type int
     */
-    int (*convertToWhole)(char*, int);
+    int (*convertToWhole)(int);
 
     /**
      * A function to convert a string, whether a float or int, to a decimal number base 10
-     * @param value The string to convert -> Type char*
-     * @param radix The base the strings digits are in, should be between 2 and 16 -> Type int
+     * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
      * @return A decimal number in base 10 -> Type double
     */
-    float (*convertToDecimal)(char*, int);
+    float (*convertToDecimal)(int);
 }String_type;
 
 /**
- * A helper function that returns the length of a string
- * @attention Please use this within the Modified String struct, as it is internal
+ * A function that constructs the String_type struct
+ * @param value An address to the string value to modify and return with the added functions -> Type string**
+ * @return A struct that contains the value and the added functions -> Type String_type
  */
-size_t _length(char*);
+String_type String_maker(char **value);
 
 /**
- * A function that returns a reversed form of the string
+ * A helper function that returns a reversed form of the stored string
+ * @return the string reversed -> type char*
  * @attention Please use this within the Modified String struct, as it is internal
  */
-char* _reverse(char*);
-
-/**
- * A function that returns a string all in lowercase
- * @attention Please use this within the Modified String struct, as it is internal
- */
-char* _toLower(char*);
-
-/**
- * A function that returns a string all in uppercase
- * @attention Please use this within the Modified String struct, as it is internal
- */
-char* _toUpper(char* value);
+char* String_maker_reverse();
 
 /**
  * A function that replaces a subset of a string within the original string with a new one
+ * @param replaced_string The substring to replace -> type char*
+ * @param new_string The new substring to replace the old substing -> type char*
+ * @return the new string with the new substring -> type char*
  * @attention Please use this within the Modified String struct, as it is internal
  */
-char* _replace(char* original_string, char* replaced_string, char* new_string);
+char* String_maker_replace(char* replaced_string, char* new_string);
 
 /**
  * A function that splits a string into a subset of strings
+ * @param delimiter The character to separate the string on -> type char
+ * @param limit The maximum number of substrings to produce -> type int
+ * @return An array of substrings -> type char**
  * @attention Please use this within the Modified String struct, as it is internal
  */
-char** _split(char* value, char delimiter, int limit);
+char** String_maker_split(char delimiter, int limit);
 
 /**
  * A function that returns the index of where a character is placed, -1 if it isnt in the string
+ * @param character The character to search for -> Type char
+ * @return The position of the character in the string -> Type int
  * @attention Please use this within the Modified String struct, as it is internal
-*/
-int _inPosition(char* value, char character);
+ */
+int String_maker_inPosition(char character);
 
 /**
  * A function that checks if a string contains a certain character
+ * @param character The character to search for -> Type char
+ * @return The boolean true or false depending on the character's presence -> Type bool
  * @attention Please use this within the Modified String struct, as it is internal
  */
-char* _includes(char* value, char character);
+bool String_maker_includes(char character);
 
 /**
  * A function to convert a string, whether a float or int, to a whole number base 10
- * @attention Please use this within the Modified String struct, as it is internal 
+ * @attention Please use this within the Modified String struct, as it is internal
+ * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int 
  */
-int _convertToWhole(char* value, int radix);
+int String_maker_convertToWhole(int radix);
 
 /**
  * A function to convert a string, whether a float or int, to a decimal number base 10
  * @attention Please use this within the Modified String struct, as it is internal
+ * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
  */
-float _convertToDecimal(char* value, int radix);
+float String_maker_convertToDecimal(int radix);

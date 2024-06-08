@@ -10,21 +10,25 @@
 #include "Double.h"
 #include "../String/ModifiedString.c"
 
-// DECLARING THE TOSTRING FUNCTION
-char* _toString_Double(double value, int radix){
-    // CHECKING IF THE VALUES ARE ADDED APPROPRIATELY
+/**
+ * The current Double created globally
+ * @attention Please import the Double_maker function, as this is internal and only holds the current value without any type safety measures, to create your own Double_type structs
+ */
+Double_type Double_current;
+
+char* Double_maker_toString(int radix){
+    // GETTING THE VALUE PROPERTY AND CHECKING REQUIRED PARAMS
+    double value = *Double_current.value;
+
     if(!radix){
         radix = 10;
-    }else if(!value){
-        fprintf(stderr, "Invalid params, no value is added");
-        exit(EXIT_FAILURE);
     }else if((radix < 2) || (radix > 36)){
         fprintf(stderr, "The base must be between 2 and 36");
         exit(EXIT_FAILURE);
     }
 
     // DECLARING VARIABLES
-        // THE INDEX FOR BOTH STRING, AND A BOOL TO TRACK POSITIVITY OF THE VALUE
+        // THE INDEX FOR BOTH DECIMAL AND INTEGER PARTS, AND A BOOL TO TRACK POSITIVITY OF THE VALUE
     int integer_index = 0; 
     int decimal_index = 0; 
     bool is_negative = false;
@@ -50,9 +54,10 @@ char* _toString_Double(double value, int radix){
     // IF NO IS -VE, CONVERT TO POSITIVE
     if((value < 0) && (radix == 10)){
         is_negative = true;
-        value = -value;
+        value = -(value);
     }
 
+    // DIVIDE THE NO INTO 2 PARTS, INTEGER AND DECIMAL
     int integer_part = floor(value);
     double decimal_part = value - integer_part;
 
@@ -113,22 +118,34 @@ char* _toString_Double(double value, int radix){
     return number_string;
 }
 
-// DECLARING THE TODECIMALS FUNCTION
-double _toDecimals_Double(double value, int digits){
-    // CHECKING IF RIGHT PARAMS WERE GIVEN
-    if(digits <= 0){
-        fprintf(stderr, "The no of significant digits should be at least one");
+Double_type Double_maker(double *value){
+    if(value == NULL){
+        fprintf(stderr, "Must provide a pointer to the value being stored");
         exit(EXIT_FAILURE);
     }
 
-    double power = pow(10, digits);
-    double rounded_number = round((double)value * power) / power;
+    Double_current.value = value;
+    Double_current.toString = Double_maker_toString;
+    Double_current.toDecimals = Double_maker_toDecimals;
 
-    return rounded_number;
+    return Double_current;
 }
+// // DECLARING THE TODECIMALS FUNCTION
+// double _toDecimals_Double(double value, int digits){
+//     // CHECKING IF RIGHT PARAMS WERE GIVEN
+//     if(digits <= 0){
+//         fprintf(stderr, "The no of significant digits should be at least one");
+//         exit(EXIT_FAILURE);
+//     }
 
-// THE DOUBLE STRUCT
-Double_type Double = {
-    .toString = _toString_Double,
-    .toDecimals = _toDecimals_Double
-};
+//     double power = pow(10, digits);
+//     double rounded_number = round((double)value * power) / power;
+
+//     return rounded_number;
+// }
+
+// // THE DOUBLE STRUCT
+// Double_type Double = {
+//     .toString = _toString_Double,
+//     .toDecimals = _toDecimals_Double
+// };

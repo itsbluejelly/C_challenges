@@ -2,6 +2,7 @@
     This file contains the
         1. Struct declaration that holds the struct type enclosing the boolean
         2. A constructor for the modified boolean
+        3. Helper function declarations for the Boolean_type struct
 
     NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT Boolean.c
 
@@ -30,9 +31,9 @@ typedef struct{
 }Boolean_type;
 
 /**
- * A function that constructs the Boolean struct
+ * A function that constructs the Boolean_type struct
  * @param value The address of a value of any type to modify and return with the added functions -> Type void*
- * @return A struct that contains the value and the added functions -> Type Boolane_type*
+ * @return A struct that contains the value and the added functions -> Type Boolane_type
  */
 Boolean_type Boolean_maker(void* value);
 
