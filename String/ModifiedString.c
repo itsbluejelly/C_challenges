@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
     // IMPORTING STRING TYPE
 #include "ModifiedString.h"
 

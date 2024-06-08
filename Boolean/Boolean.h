@@ -1,30 +1,44 @@
-/* This file contains the struct that hold all functionality of the boolean type, which include:
-    1. boolValue(bool) -> A function that accepts a bool and returns a string "true" if its true or "false" if its false
+/*
+    This file contains the
+        1. Struct declaration that holds the struct type enclosing the boolean
+        2. A constructor for the modified boolean
 
-NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT Boolean.c
+    NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT Boolean.c
 
-STANDARDS:
-    1. The struct defined holds all helper values
-    2. The helper functions are defined with an underscore + name, to prevent naming issues
+    STANDARDS:
+        1. The struct defined holds the value and helper functions
+        2. The helper functions are defined in the format "Boolean_maker_(helper fn)", to prevent naming issues
+        3. Anything to do with the custom type should be prefixed with "Boolean_"
 */
 
 #pragma once
 
-// IMPORTING NECESSARY LIBRARIES
-#include <stdbool.h>
-
-// THE STRUCT CONTAINING ALL HELPER FUNCTIONS
+/**
+ * The struct definition for the boolean type that contains these properties
+ * 1. Value -> A pointer to the value held within the boolean struct
+ * 2. boolValue() -> A function that checks if the value held is true or false
+ */
 typedef struct{
+    // A pointer to the value of any type held within the boolean struct -> Type void*
+    void* value;
+
     /**
-     * A function that checks if a boolean value is true or false
-     * @param value The boolean to check -> Type bool
-     * @return The string "true" if true and "false" if false
-    */
-    char* (*boolValue)(bool value);
+     * A function that checks if the stored value held is true or false
+     * @return The string "true" if true and "false" if false -> Type char*
+     */
+    char* (*boolValue)();
 }Boolean_type;
 
 /**
- * A function that checks if a boolean value is true or false
- * @attention Please use this eithin the Boolean struct, as it is internal
+ * A function that constructs the Boolean struct
+ * @param value The pointer of a value of any type to modify and return with the added functions -> Type void*
+ * @return A struct that contains the value and the added functions -> Type Boolane_type*
  */
-static char* _boolValue(bool value);
+Boolean_type Boolean_maker(void* value);
+
+/**
+ * A helper function that checks if the stored value is true or false
+ * @attention Please use this within the Boolean_maker function, as it is internal
+ * @return The string "true" if true and "false" if false -> Type char*
+ */
+char* Boolean_maker_boolValue();
