@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
     // IMPORTING STRING TYPE
 #include "ModifiedString.h"
 
@@ -22,7 +23,6 @@ int String_maker_inPosition(char character){
 }
 
 bool String_maker_includes(char character){
-    char* value = *String_current.value;
     int position = String_maker_inPosition(character);
     return position == -1 ? false : true;
 }
@@ -179,7 +179,7 @@ int String_maker_convertToWhole(int radix){
 
 char* String_maker_replace(char *replaced_string, char *new_string){
     // GETTIG CURRENT VALUES
-    char* original_string = String_current.value;
+    char* original_string = *String_current.value;
     size_t original_length = String_current.length;
 
     // DECLARING VARIABLES
@@ -230,7 +230,7 @@ char* String_maker_replace(char *replaced_string, char *new_string){
 
 char* String_maker_reverse(){
     // GETTING CURRENT VALUES
-    char* value = String_current.value;
+    char* value = *String_current.value;
     size_t original_length = String_current.length;
 
     // DECLARING VARIABLES
@@ -257,8 +257,8 @@ String_type String_maker(char **value){
 
     String_current.value = value;
     String_current.length = strlen(*value);
-    String_current.lowercase = strlwr(*value);
-    String_current.uppercase = strupr(*value);
+    String_current.lowercase = strlwr(strdup(*value));
+    String_current.uppercase = strupr(strdup(*value));
     String_current.convertToDecimal = String_maker_convertToDecimal;
     String_current.convertToWhole = String_maker_convertToWhole;
     String_current.includes = String_maker_includes;
@@ -266,4 +266,6 @@ String_type String_maker(char **value){
     String_current.replace = String_maker_replace;
     String_current.reverse = String_maker_reverse;
     String_current.split = String_maker_split;
+
+    return String_current;
 }

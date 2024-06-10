@@ -36,10 +36,10 @@ typedef struct{
     char** value;
     // The length of the stored string --> Type size_t
     size_t length;
-    // The stored string all in lowercase
-    char *lowercase;
-    // The stored string all in uppercase
-    char *uppercase;
+    // The string in lowercase form --> Tye char*
+    char* lowercase;
+    // The string in uppercase form --> Tye char*
+    char* uppercase;
 
     /**
      * A function that returns a reversed form of the stored string
@@ -143,7 +143,8 @@ bool String_maker_includes(char character);
 /**
  * A function to convert a string, whether a float or int, to a whole number base 10
  * @attention Please use this within the Modified String struct, as it is internal
- * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int 
+ * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
+ * @return A whole number in base 10 -> Type int
  */
 int String_maker_convertToWhole(int radix);
 
@@ -151,5 +152,6 @@ int String_maker_convertToWhole(int radix);
  * A function to convert a string, whether a float or int, to a decimal number base 10
  * @attention Please use this within the Modified String struct, as it is internal
  * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
+ * @return A decimal number in base 10 -> Type double
  */
 float String_maker_convertToDecimal(int radix);
