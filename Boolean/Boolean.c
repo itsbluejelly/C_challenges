@@ -23,7 +23,7 @@ char* _Boolean_maker_boolValue(){
     }
 }
 
-void _Boolean_maker_delete(){
+void _Boolean_maker_clear(){
     free(_Boolean_current);
 }
 
@@ -39,7 +39,7 @@ Boolean_type* Boolean_maker(void* value){
     // ASSIGNING VALUES TO THE CREATED INSTANCE
     _Boolean_current->value = value;
     _Boolean_current->boolValue = _Boolean_maker_boolValue;
-    _Boolean_current->delete = _Boolean_maker_delete;
+    _Boolean_current->clear = _Boolean_maker_clear;
 
     return _Boolean_current;
 }

@@ -19,7 +19,7 @@
  * The struct definition for the boolean type that contains these properties:
  * 1. Value -> A pointer to the value held within the boolean struct
  * 2. boolValue() -> A function that checks if the value held is true or false
- * 3. delete() -> A function to delete the Boolean data type instance from memory
+ * 3. clear() -> A function to clear the Boolean data type instance from memory
  */
 typedef struct Boolean_type
 {
@@ -32,8 +32,8 @@ typedef struct Boolean_type
      */
     char *(*boolValue)();
 
-    // A function to delete the Boolean data type instance from memory
-    void (*delete)();
+    // A function to clear the Boolean data type instance from memory
+    void (*clear)();
 } Boolean_type;
 
 /**
@@ -51,7 +51,7 @@ Boolean_type* Boolean_maker(void* value);
 char* _Boolean_maker_boolValue();
 
 /**
- * A helper function that deletes the current Boolean_type instance
+ * A helper function that cleares the current Boolean_type instance
  * @attention Please use this within the Boolean_maker function, as it is internal
  */
-void _Boolean_maker_delete();
+void _Boolean_maker_clear();

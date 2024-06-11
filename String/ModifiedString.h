@@ -1,21 +1,39 @@
 /*
     This file contains the
-        1. Struct declaration that holds the struct type enclosing the string
-        2. A constructor for the modified string
-        3. Helper function declarations for the String_type struct
+        1. Struct declaration that holds all the setter functions for the String_type struct
+        2. Struct declaration that holds all the getter functions for the String_type struct
+        3. Struct declaration that holds all the utils functions for the String_type struct
+        4. Struct declaration that holds the struct type enclosing the string
+        5. A constructor for the modified string
+        6. Helper function declarations for the String_type struct
+        7. Helper functions for the whole String_type helper functions😅
 
     NB: THIS IS NOT IMPORTED, BUT RATHER IMPORT ModifiedString.c
 
     STANDARDS:
-        1. The struct defined holds the value and helper functions
-        2. The helper functions are defined in the format "String_maker_(helper fn)", to prevent naming issues
-        3. Anything to do with the custom type should be prefixed with "String_"
+        1. The struct defined holds the necessary structs and helper functions
+        2. All private helper functions(those NOT meant for the struct) and variables follow the pattern "_String_(name)" to prevent naming issues
+        3. All private variables within the String struct produced are prefixed with 2 underscores, as they are private
+        4. The helper functions(those MEANT for the struct) are defined in the format "_String_maker_(helper fn)", to prevent naming issues
+        5. The structs types contained within the String_type struct are prefixed with "String_type_(name) to prevent naming conflicts"
 */
 
 # pragma once
 
 // IMPORTING NECESSARY LIBRARIES
 #include <stdbool.h>
+
+/**
+ * The struct definition for the utils property in the String data type, which holds the utils functions. These functions include:
+ * 1. clear() -> Deletes the current String data type instance from memory
+ * 2. revert() -> Reverts any changes made to the temporary copy of the string during chaining to the actual value stored, useful if you want to undo any changes after chaining
+ */
+typedef struct String_type_utils{
+    // A function that deletes the current String data type instance from memory
+    void (*clear)();
+    // A function that reverts any changes made to the temporary copy of the string during chaining to the actual value stored
+    void (*revert)();
+}String_type_utils;
 
 /**
  * The struct definition for the string type that contains these properties

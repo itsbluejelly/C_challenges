@@ -20,7 +20,7 @@ void testNumber(){
         *(int*)bool_number->value, number_value, bool_number->boolValue()
     );
 
-    bool_number->delete();
+    bool_number->clear();
 }
 
 // A FUNCTION TO TEST A CHARACTER WITH BOOLEAN
@@ -37,7 +37,7 @@ void testCharacter(){
         *(char *)bool_character->value, character_value, bool_character->boolValue()
     );
 
-    bool_character->delete();
+    bool_character->clear();
 }
 
 // A FUNCTION TO TEST A STRING WITH BOOLEAN FUNCTIONALITY
@@ -58,7 +58,7 @@ void testString(){
         (char*)bool_string->value, actual_string, bool_string->boolValue()
     );
 
-    bool_string->delete();
+    bool_string->clear();
 }
 
 // MAIN FUNCTION
