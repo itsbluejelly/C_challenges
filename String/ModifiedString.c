@@ -249,7 +249,7 @@ char* String_maker_reverse(){
     return value;
 }
 
-String_type String_maker(char **value){
+String_type* String_maker(char *value){
     if (value == NULL){
         fprintf(stderr, "Must provide a pointer to the value being stored");
         exit(EXIT_FAILURE);
