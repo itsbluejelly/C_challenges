@@ -11,26 +11,26 @@
 #include "ModifiedString.h"
 
 /**
- * The current String created globally
- * @attention Please import the String_maker function, as this is internal and only holds the current value without any type safety measures, to create your own String_type structs
+ * The memory address to the String data type created globally
+ * @attention Please import the String_maker function, as this is internal and only holds the current value without any type safety measures, to create your own String data types
  */
-String_type String_current;
+String_type* _String_current;
 
-int String_maker_inPosition(char character){
-    char* value = *String_current.value;
+int _String_maker_get_position(char character){
+    char* value = _String_current->get.__copy;
     int position = strcspn(value, &character);
     return value[position] == '\0' ? -1 : position;
 }
 
-bool String_maker_includes(char character){
-    int position = String_maker_inPosition(character);
+bool _String_maker_get_isIncluded(char character){
+    int position = _String_maker_get_position(character);
     return position == -1 ? false : true;
 }
 
-char** String_maker_split(char delimiter, int limit){
+char** _String_maker_get_splits(char delimiter, int limit){
     // GETTING THE CURRENT VALUES AND CHECK THE PARAMS
-    char* value = *String_current.value;
-    size_t original_length = String_current.length;
+    char* value = _String_current->get.__copy;
+    size_t original_length = _String_current->get.length;
     if(limit <= 0) return NULL;
 
     // DECLARING VARIABLES
@@ -91,10 +91,10 @@ char** String_maker_split(char delimiter, int limit){
     return result;
 }
 
-float String_maker_convertToDecimal(int radix){
+double _String_maker_get_decimalNumber(int radix){
     // GETTING THE VALUE AND CHECKING IF THE VALUES ARE OKAY
-    char* value = *String_current.value;
-    size_t original_length = String_current.length;
+    char* value = _String_current->get.__copy;
+    size_t original_length = _String_current->get.length;
 
     if (!radix){
         radix = 10;
@@ -107,16 +107,16 @@ float String_maker_convertToDecimal(int radix){
     bool isNegative = false;
     bool isDecimal = false;
     char *decimal_part, *integer_part;
-    float result;
+    double result;
 
     // CHECK IF THE STRING IS A DECIMAL OR A NEGATIVE NUMBER OR IS A VALID DIGIT
     char *possible_characters = "0123456789abcdefghijklmnopqrstuvwxyz";
     char *valid_characters = &possible_characters[radix];
-    String_type valid_string = String_maker(&valid_characters);
+    String_type* valid_string = String_maker(valid_characters);
 
     for (long long unsigned i = 0; i < original_length; i++){
         // CHECK IF VALID
-        if (valid_string.includes(value[i])){
+        if (valid_string->get.isIncluded(value[i])){
             fprintf(stderr, "The digit '%c' in '%s' is invalid for base %d", value[i], value, radix);
             exit(EXIT_FAILURE);
         }
@@ -133,7 +133,7 @@ float String_maker_convertToDecimal(int radix){
 
     // DEAL WITH THE DECIMAL PRESCENCE
     if (isDecimal){
-        char **split_strings = String_current.split('.', 2);
+        char **split_strings = _String_current->get.splits('.', 2);
         integer_part = split_strings[0];
         decimal_part = split_strings[1];
     }else{
@@ -143,7 +143,7 @@ float String_maker_convertToDecimal(int radix){
     // CONVERT THE WHOLE PART TO AN INTEGER
     for (int i = 0; i < (int)strlen(integer_part); i++){
         double power = pow((double)radix, (double)(strlen(integer_part) - (i + 1)));
-        int digit = valid_string.inPosition(integer_part[i]) * power;
+        int digit = valid_string->get.position(integer_part[i]) * power;
         result += digit;
     }
 
@@ -151,7 +151,7 @@ float String_maker_convertToDecimal(int radix){
     if (decimal_part != NULL){
         for (int i = 1; i <= (int)strlen(decimal_part); i++){
             double power = 1 / (pow((double)radix, (double)i));
-            float digit = valid_string.inPosition(integer_part[i]) * power;
+            double digit = valid_string->get.position(integer_part[i]) * power;
             result += digit;
         }
     }else{
@@ -160,10 +160,10 @@ float String_maker_convertToDecimal(int radix){
 
     // RETURN THE DECIMAL
     if (isNegative) result = -(result);
-    return (result);
+    return result;
 }
 
-int String_maker_convertToWhole(int radix){
+int _String_maker_get_wholeNumber(int radix){
     // CHECKING THE PARAMS
     if(!radix){
         radix = 10;
@@ -173,7 +173,7 @@ int String_maker_convertToWhole(int radix){
     }
 
     // CONVERT TO DECIMAL AND ROUND OFF TO GET RESULT
-    int result = round(String_current.convertToDecimal(radix));
+    int result = round(_String_current->get.decimalNumber(radix));
     return result;
 }
 
