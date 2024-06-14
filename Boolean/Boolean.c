@@ -15,7 +15,8 @@ Boolean_type* _Boolean_current;
 char* _Boolean_maker_boolValue(){
     if ( 
         *(int*)_Boolean_current->value == 0 ||
-       strcmp((char*)_Boolean_current->value, "\0") == 0
+       strcmp((char*)_Boolean_current->value, "\0") == 0 ||
+       _Boolean_current->value == NULL
     ){
         return "false";
     }else{
