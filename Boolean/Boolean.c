@@ -28,13 +28,13 @@ void _Boolean_maker_clear(){
 }
 
 Boolean_type* Boolean_maker(void* value){
-    // CHECKING IF POINTER IS PASSED THROUGH AND ASSIGNING MEMORY TO THE INSTANCE
-    if (value == NULL){
-        fprintf(stderr, "Must provide a pointer to the value being stored");
+    // ASSIGNING MEMORY TO THE INSTANCE AND CHECKING IF IT IS SUCCESSFULL
+    _Boolean_current = malloc(sizeof(Boolean_type));
+
+    if (_Boolean_current == NULL){
+        fprintf(stderr, "Error in assigning memory to boolean data type");
         exit(EXIT_FAILURE);
     }
-
-    _Boolean_current = malloc(sizeof(Boolean_type));
     
     // ASSIGNING VALUES TO THE CREATED INSTANCE
     _Boolean_current->value = value;

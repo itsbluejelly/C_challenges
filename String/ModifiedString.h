@@ -176,29 +176,29 @@ typedef struct String_type{
 
     /**
      * A method that converts the tracked string to lowercase
-     * @return The memory address of the modified String data type -> Type String_type*
+     * @return The memory address of the modified String data type -> Type void*
      */
-    String_type* (*lowercase)();
+    struct String_type* (*lowercase)();
 
     /**
      * A method that converts the tracked string to uppercase
-     * @return The memory address of the modified String data type -> Type String_type*
+     * @return The memory address of the modified String data type -> Type struct String_type*
      */
-    String_type* (*uppercase)();
+    struct String_type* (*uppercase)();
 
     /**
      * A method that reverses the tracked string
-     * @return The memory address of the modified String data type -> Type String_type*
+     * @return The memory address of the modified String data type -> Type struct String_type*
      */
-    String_type* (*reverse)();
+    struct String_type* (*reverse)();
 
     /**
      * A method that replaces a string within the tracked string
      * @param replaced_string The substring to replace -> type char*
      * @param new_string The new substring to replace the old substing -> type char*
-     * @return The memory address of the modified String data type -> Type String_type*
+     * @return The memory address of the modified String data type -> Type struct String_type*
      */
-    String_type* (*replace)(char* replaced_string, char* new_string);
+    struct String_type* (*replace)(char* replaced_string, char* new_string);
 }String_type;
 
 /**
@@ -340,7 +340,17 @@ void _String_maker_utils_clear();
 void _String_maker_utils_revert();
 
 /**
- * A function that splits a string into a subset of strings, and returns them
+ * A helper private function that splits a string into a subset of strings, and returns them
+ * @param value The string to split -> Type char*
+ * @param delimiter The character to separate the string on -> type char
+ * @param limit The maximum number of substrings to produce -> type int
+ * @return An array of substrings -> type char**
+ * @attention Please use this within the String data type helper functions, as it is private
+ */
+char** _String_split(char* value, char delimiter, int limit);
+
+/**
+ * A helper function that splits a string into a subset of strings, and returns them
  * @param delimiter The character to separate the string on -> type char
  * @param limit The maximum number of substrings to produce -> type int
  * @return An array of substrings -> type char**
@@ -349,7 +359,16 @@ void _String_maker_utils_revert();
 char** _String_maker_get_splits(char delimiter, int limit);
 
 /**
- * A function that returns the index of where a character is placed, -1 if it isnt in the string
+ * A helper private function that returns the index of where a character is placed, -1 if it isnt in the string
+ * @param value The string to perform the search on -> Type char*
+ * @param character The character to search for -> Type char
+ * @return The position of the character in the string -> Type int
+ * @attention Please use this within the String data type helper functions, as it is private
+ */
+int _String_inPosition(char* value, char character);
+
+/**
+ * A helper function that returns the index of where a character is placed, -1 if it isnt in the string
  * @param character The character to search for -> Type char
  * @return The position of the character in the string -> Type int
  * @attention Please use this within the String_type struct, as it is internal
@@ -357,7 +376,16 @@ char** _String_maker_get_splits(char delimiter, int limit);
 int _String_maker_get_position(char character);
 
 /**
- * A function that checks if a string contains a certain character
+ * A helper private function that checks if a string contains a certain character
+ * @param value The string to perform the search on -> Type char*
+ * @param character The character to search for -> Type char
+ * @return The boolean true or false depending on the character's presence -> Type bool
+ * @attention Please use this within the String data type helper functions, as it is private
+ */
+bool _String_includes(char* value, char character);
+
+/**
+ * A helper function that checks if a string contains a certain character
  * @param character The character to search for -> Type char
  * @return The boolean true or false depending on the character's presence -> Type bool
  * @attention Please use this within the String_type struct, as it is internal
@@ -365,7 +393,7 @@ int _String_maker_get_position(char character);
 bool _String_maker_get_isIncluded(char character);
 
 /**
- * A function to convert a string, whether a float or int, to a whole number base 10
+ * A helper function to convert a string, whether a float or int, to a whole number base 10
  * @attention Please use this within the String_type struct, as it is internal
  * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
  * @return A whole number in base 10 -> Type int
@@ -373,7 +401,7 @@ bool _String_maker_get_isIncluded(char character);
 int _String_maker_get_wholeNumber(int radix);
 
 /**
- * A function to convert a string, whether a float or int, to a decimal number base 10
+ * A helper function to convert a string, whether a float or int, to a decimal number base 10
  * @attention Please use this within the String_type struct, as it is internal
  * @param radix The base the strings digits are in, should be between 2 and 36 -> Type int
  * @return A decimal number in base 10 -> Type double
