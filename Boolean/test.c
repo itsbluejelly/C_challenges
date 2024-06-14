@@ -14,7 +14,7 @@ void testNumber(){
     printf("\tHello, please enter any integer to test: ");
     scanf("%d", &number_value);
 
-    Boolean_type* bool_number = Boolean_maker(&number_value);
+    Boolean_type* bool_number = Boolean_maker(&number_value, BOOLEAN_VALUE_TYPE_NON_ARRAY);
     printf("\n\t<---Testing value method--->\n");
 
     printf(
@@ -33,7 +33,7 @@ void testCharacter(){
     printf("\tHello, enter the character to test: ");
     scanf(" %c", &character_value);
 
-    Boolean_type* bool_character = Boolean_maker(&character_value);
+    Boolean_type* bool_character = Boolean_maker(&character_value, BOOLEAN_VALUE_TYPE_NON_ARRAY);
     printf("\n\t<---Testing value method--->\n");
 
     printf(
@@ -56,7 +56,7 @@ void testString(){
     actual_string = malloc(strlen(string_value) + 1);
     strcpy(actual_string, string_value);
 
-    Boolean_type* bool_string = Boolean_maker(actual_string);
+    Boolean_type* bool_string = Boolean_maker(actual_string, BOOLEAN_VALUE_TYPE_NON_ARRAY);
     printf("\n\t<---Testing value method--->\n");
 
     printf(
@@ -71,18 +71,49 @@ void testString(){
 void testArray(){
     printf("<------Testing arrays------>\n");
 
-    int** numbers_array = malloc(sizeof(int*));
-    numbers_array[0] = (int*)NULL;
-    Boolean_type* bool_array = Boolean_maker(numbers_array);
+    char* strings_array[2] = {"hello", "hi"};
+    int* number_array[3], number_value = 1, bad_number=0;
+    char** wrong_strings = malloc(sizeof(char*));
+    int** wrong_numbers = malloc(sizeof(int*));
 
+    wrong_strings[0] = "";
+    number_array[0] = &number_value;
+    wrong_numbers[0] = &bad_number;
+
+    Boolean_type *bool_strings = Boolean_maker(strings_array, BOOLEAN_VALUE_TYPE_STRING_ARRAY);
     printf("\n\t<---Testing value method--->\n");
 
+    printf("\t\t<-Right strings array->\n");
     printf(
-        "\t\t-> Value of 1st element stored stored: %s\n\t\t-> The value '%p' is '%s'\n", 
-        (char*)bool_array->value, numbers_array[0], bool_array->boolValue()
+        "\t\t\t-> Value of 1st element stored stored: %s\n\t\t\t-> The value '%s' is '%s'\n", 
+        *(char**)bool_strings->value, strings_array[0], bool_strings->boolValue()
     );
 
-    bool_array->clear();
+    printf("\t\t<-Wrong strings array->\n");
+    bool_strings->value = wrong_strings;
+    printf(
+        "\t\t\t-> Value of 1st element stored stored: %s\n\t\t\t-> The value '%s' is '%s'\n", 
+        *(char**)bool_strings->value, wrong_strings[0], bool_strings->boolValue()
+    );
+
+    Boolean_type *bool_numbers = Boolean_maker(number_array, BOOLEAN_VALUE_TYPE_ARRAY);
+    printf("\t\t<-Right numbers array->\n");
+    printf(
+        "\t\t\t-> Value of 1st element stored stored: %d\n\t\t\t-> The value '%d' is '%s'\n", 
+        **(int**)bool_numbers->value, *number_array[0], bool_numbers->boolValue()
+    );
+
+    printf("\t\t<-Wrong numbers array->\n");
+    bool_numbers->value = wrong_numbers;
+    printf(
+        "\t\t\t-> Value of 1st element stored stored: %d\n\t\t\t-> The value '%d' is '%s'\n", 
+        **(int**)bool_numbers->value, *wrong_numbers[0], bool_numbers->boolValue()
+    );
+
+    bool_numbers->clear();
+    bool_strings->clear();
+    free(wrong_numbers);
+    free(wrong_strings);
 }
 
 // MAIN FUNCTION

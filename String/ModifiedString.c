@@ -344,6 +344,11 @@ void _String_maker_set_toUppercase(){
 
 String_type* String_maker(char *value){
     // ASSIGNING MEMORY TO THE INSTANCE AND CHECKING IF IT IS SUCCESSFULL
+    if (value == NULL){
+        fprintf(stderr, "The value pointer passed in decays to a null value");
+        exit(EXIT_FAILURE);
+    }
+
     _String_current = malloc(sizeof(String_type));
 
     if (_String_current == NULL){
