@@ -13,6 +13,7 @@
 Boolean_type* _Boolean_current;
 
 char* _Boolean_maker_boolValue(){
+    printf("Current address used: %p\n", _Boolean_current);
     void **array = _Boolean_current->value;
     
     // 1. IF POINTER LEADS TO NULL, RETURN FALSE
@@ -44,6 +45,7 @@ void _Boolean_maker_clear(){
 }
 
 Boolean_type* Boolean_maker(void* value, BOOLEAN_VALUE_TYPE type){
+    printf("Previous address was: %p\n", _Boolean_current);
     // ASSIGNING MEMORY TO THE INSTANCE AND CHECKING IF IT IS SUCCESSFULL
     _Boolean_current = malloc(sizeof(Boolean_type));
 
@@ -53,6 +55,7 @@ Boolean_type* Boolean_maker(void* value, BOOLEAN_VALUE_TYPE type){
     }
     
     // ASSIGNING VALUES TO THE CREATED INSTANCE
+    printf("Current address is: %p\n", _Boolean_current);
     _Boolean_current->value = value;
     _Boolean_current->type = type;
     _Boolean_current->boolValue = _Boolean_maker_boolValue;
