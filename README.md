@@ -1,5 +1,8 @@
 # The C methods
 
+## ⚠️⚠️⚠️⚠️ NB
+> The above project has been archived, due to dependency on global values, which makes it harder to clean up memory, and overrall poor memory management. To use C while still having Object Oriented Programming, its better to use `C++`
+
 This project is aimed to solve an issue with efficiency and data structures in C.
 
 ## Problems
